@@ -1,0 +1,27 @@
+\chapter{Background}
+
+This chapter describes some background information on Approximate Computing and the automated framework IIDEAA. Section on Approximate Computing will cover its definition, motivation, challenges, and some basic strategies. As for IIDEAA, we will present two tools that the framework is made up of: Clang-Chimera, a source-to-source mutation software that apply pre-defined code mutator corresponding to some of the strategies. The other tool is an Evolution search engine named Bellerophon, which goes through Chimera's mutated source code to find the best approximated version of the programe, based on how the user decide to calculate the error, reward and penalty functions.
+\section{Approximate Computing}
+
+\subsection{Definition}
+Approximate computing is a computational technique that loosen up the accuracy requirement of mathematic operations performed by computers, returning a result that is possibly inaccurate (but not incorrect) compares to the exact result, yet is still within the range of "acceptable error" for an application to function properly. Such applications that enable Approximate Computing are called "error-tolerant" applications \cite{7348659}. These applications usually have gaps between the accuracy level it(or the user) require and that of the system can deliver, and thus is capitalized by Approximate Computing to produce a variety of optimizations \cite{AxCSurvey} \\
+~\\
+By reducing the stress of exact calculation and some minor loss of precision, this technique can promise a gain in efficiency, in terms of speed, memory, energy consumption, etc. As a prime example, the approximated version of k-mean clustering algorithm, tested by Chippa, achieved up to 50x energy reduction while losing only 5\% of accuracy and up to 5x energy reduction with insignificant error \cite{SEHD} .\\
+~\\
+Approximate Computing can be conducted on both hardware and software layer, providing diverse methods to apply the technique to applications. On hardware level, the target can be either: circuits, by replacing them with less accurate but more energy-efficient one, or the voltage of the hardware component, deliberately lowering it to make a compromise between accuracy and energy-consumption. With software layer, the general strategy is to overlook parts of the program that have insignificant contribution to the final result \cite{7348659}. 
+
+\subsection{Motivation}
+
+\subsection{Common Strategies}
+
+\subsubsection{Precision Scaling}
+
+\subsubsection{Loop Perforation}
+
+\subsection{Challenges}
+
+\section{IIDEAA Automate Framework} 
+
+\subsection{Clang Chimera}
+
+\subsection{Bellerophon}
