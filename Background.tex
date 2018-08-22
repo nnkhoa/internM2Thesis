@@ -57,9 +57,22 @@ The IIDEAA framework was developed to tackle one of the challenges that is holdi
 The main selling point of this framework is that the user does not need to detail which part of the program to be approximated and in what way. It only asks for which functions that need to be approximated and the desired error threshold to find the best possible result. Depending on what approximate strategy is used, the framework can produce a hardware or sofware implementation of the approximated application ~\cite{iideaa}. \\
 ~\\
 IIDEAA comprises of two smaller tools that was written in C++. The first one is Chimera, a source-to-source mutation software that can modify C/C++ source code with a given code mutator. The second tool is called Bellerophon which offers a Evolutionary Search Engine to explore the mutated code to find all the best functional approximated versions that satisfy the user's requirements. \\
-%inser image of the procedure
+%insert image of the procedure
+~\\
 A typical run of the framework consists of the following step: At the beginning, the user will provide to Chimera the original C/C++ source code  and the Approximate Operator that IIDEAA supports along with functions to test Approximate Computing on. At the next step, Chimera will try to mutate the source code with respect to the provided Operator, then proceed with a syntax check to ensure the mutation is successful. After that, Bellerophon will execute various version of the mutated source code by altering the mutator configuration, thus finding the best approximated version of the program. Criterion that can dictate which is the best configuration are how the error function (which calculate how much the approximated result deviate from the precise one), error threshold, and reward/penalty functions are defined. \\
 
-\subsection{Clang Chimera}
+\subsection{Clang-Chimera}
+
+Chimera was written in C/C++, based on the LLVM-Clang compiler. To be able to produce source-to-source mutation, Chimera exploits a few features of the said compiler. It inspects on the Clang's Abstract Syntax Tree which is a tree-based representation of the the source code. The tree contains nodes that symbolize the langague structure of a given source code. Moreover, a set of nodes will represent a specific patterns, which illustrates a peculiar structure of the source code. \\
+~\\
+%example of AST
+By analyzing this Abstract Syntax Tree, Chimera is able to manipulate and mutate the source code with the help of 2 existing Clang API classes: \textit{ASTMatcher} and \textit{Rewriter}. With \textit{ASTMatcher}, Chimera is able to identify which nodes to mutate based on the given mutator. After all desired nodes have been found, \textit{Rewriter} will try to apply the mutation ~\cite{iideaa}. \\
 
 \subsection{Bellerophon}
+
+Bellerophon takes the mutated files and mutator configurations created by Chimera as input to explore all the different possibilities based on the parameters given by the user. To exploring each possibility, Bellerophon executes the mutated application based on the corresponding configuration and estimates their performance by a set of Fitness Functions. The definition of these Fitness Functions, generally include error(accuracy loss) and reward functions, should be defined by the user so that Bellerophon can function properly. The best configurations are those that satisfy the trade-off threshold between performance and accuracy loss ~\cite{iideaa}. \\
+~\\
+Bellerphon takes advantages of some features of the following tools. First, it uses the ParadisEO framework, which is a metaheuristics software consisting of many evolutionary algorithm, to effectively explore approximate variants of the mutated source code and configuration. Secondly, to reduce execution time, Bellerophon uses LLVM's Just-In-Time compiler which enables the ability to translate only what is mandatory for the mutated code (e.g. part of the code that was changed) to run ~\cite{iideaa}. Since there are many variants of the mutated program to execute, if the program has to re-compile for each time a new version is being tested, it will waste a lot of time. Just-In-Time compiler solve this problem by compiling section of code that are being use repeatly (e.g. code that was not mutated) once and interpreting the mutated sections \cite{JIT}. \\
+
+\subsection{Current Challenges}
+Since IIDEAA framework was developed recently, it is still far from perfect as it still lacks a core feautre. Currently, IIDEAA framework is only able to show which is the best configurations, which is inconvenient for the user. If Bellerophon results in many configurations, manually testing all of them will take time. Ideally, IIDEAA framework should have a tool to automatically generate the variants based on achieved results. Moreover, as it has not been tested widely, bugs may still occur when running the framework, either in Chimera or Bellerophon. 
