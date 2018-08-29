@@ -3,42 +3,38 @@
 \section{Context and Motivation}
 %Very brief introduction on Artificial Neural Network
 
-Deep Learning is an approach used in the field of Artificial Intelligence and Machine Learning to help computers solve problems that are easy and intuative for human to execute yet extremely difficult to give a formal explanation, such as object recognition. The technique centers around assisting computers in understand the most fundamental, simplest notions of the task, building experiences and and works its way through a hierachy of concepts with increasing complexity. One of the more basic and earlier algorithms in Deep Learning is Artificial Neural Network, or Neural Network for short, which is inspired by biological brain, having interconnected neurons that can receive and produce real-value input \cite{Goodfellow-et-al-2016}. \\
+Deep Learning is an approach used in the field of Artificial Intelligence and Machine Learning to help computers solve problems that are easy and intuitive for human to execute yet extremely difficult to give a formal explanation, such as object recognition. The technique centers around assisting computers in understand the most fundamental, simplest notions of the task, building experiences and and works its way through a hierarchy of concepts with increasing complexity. One of the more basic and earlier algorithms in Deep Learning is Artificial Neural Network, or Neural Network for short, which is inspired by biological brain, having interconnected neurons that can receive input and produce real-value output \cite{Goodfellow-et-al-2016}. \\
 ~\\
 %Current state of Neural Network
-As of the time of writing, Artificial Neural Network, and Deep Learning in general, is becoming a trending technique in the field of Machine Learning and Artificial Intelligence, as it is being wildly used and researched by many organizations. It has produced great results in complex tasks such as image recognition \cite{Krizhevsky:2012:ICD:2999134.2999257}, natural language processing \cite{recent-advances-in-deep-learning-for-speech-research-at-microsoft}, or even playing a sophisticated game such as the Go game \cite{GoGame}. \\ 
+As of the time of writing, Artificial Neural Network, and Deep Learning in general, is becoming a trending technique in the field of Machine Learning and Artificial Intelligence, as it is being widely used and researched by many organizations. It has produced great results in complex tasks such as image recognition \cite{Krizhevsky:2012:ICD:2999134.2999257}, natural language processing \cite{recent-advances-in-deep-learning-for-speech-research-at-microsoft}, or even playing a sophisticated game such as the Go game \cite{GoGame}. \\ 
 ~\\
 %NN has disadvantages as consumes time/electricity while demands high-end hardware
-While having great achievements in the past years, Deep Learning is still without significant drawbacks. One of its major disavantages is that the technique overall is quite power-hungry, time-consuming and hardware-intensive. For example, for AlphaGo to be able to obtain its result, it costed the team 4 to 6 weeks of training the model, required 2000 CPUs and 250 GPUs which consumed 600kW of electricity. These are huge numbers, especially when compare to a 20W brain power of a Go player \cite{GoGame}. Due to this problem, a lot of researchs have been conducted, both from industrial side and academic side, to find an equilibrium between cost and performance. \\
+While having great achievements in the past years, Deep Learning is still without significant drawbacks. One of its major disadvantages is that the technique overall is quite power-hungry, time-consuming and hardware-intensive. For example, for AlphaGo to be able to obtain its result, it costed the team 4 to 6 weeks of training the model, required 2000 CPUs and 250 GPUs which consumed 600kW of electricity. These are huge numbers, especially when compare to a 20W brain power of a Go player \cite{GoGame}. Due to this problem, a lot of researches have been conducted, both from industrial side and academic side, to find an equilibrium between cost and performance. \\
 ~\\
 %AxC might be a solution but required automated framework to be efficient
-Because Artificial Neural Network has shown itself to be inherently resillience to insignificant error, being able to use lower arithmetic precision but not hurting the overall result of the network \cite{DBLP:journals/corr/SungSH15}, Approximate Computing is a promising solution to the problem previously stated. However, due to network's high complexity , being able to explore all possible Approximate Computing variants of it requires a lot of time and effort. Hence, an automatic framework is essential in order to be proficient in finding optimal Approximated solutions. \\
-~\\
-In this context, the internship at Laboratoire d'Informatique, de Robotique et de Microélectronique de Montpellier (LIRMM) focuses on the following goals: ~\\
+Because Artificial Neural Network has shown itself to be inherently resilience to insignificant error, being able to use lower arithmetic precision but not hurting the overall result of the network \cite{DBLP:journals/corr/SungSH15}, Approximate Computing is a promising solution to the problem previously stated. However, due to network's high complexity , being able to explore all possible Approximate Computing variants of it requires a lot of time and effort. Hence, an automatic framework is essential in order to be proficient in finding optimal Approximated solutions. \\
+
+\section{Internship's Objective}
+In this give context, the internship at Laboratoire d'Informatique, de Robotique et de Microélectronique de Montpellier (LIRMM) focuses on the following goals: ~\\
 \begin{itemize}
 	\item Test and debug to improve IIDEAA, an automated framework designed to explore Approximate Computing variations of the target program.
 	\item Check the framework compatibility with some C/C++ neural network library and application.
 	\item Develop an automatic source-to-source mutation that will automatically generate Approximate Computing variants as the framework right now is only able to explore and test. 
 \end{itemize}
-\vspace*{1cm}
-
-% \subsection{IIEAA framework}
-
-% \vspace*{1cm}
 
 \section{Host Institution - LIRMM}
 
-Founded in 1992, LIRMM,shorts for Laboratoire d'Informatique, de Robotique et de Microélectronique de Montpellier, is a joint research laboratory between the Centre National de la Recherche Scientifique(CNRS) and the University of Montpellier. The lab has gathered many researchers from different countries, such as France, Italy, China, Brazil, and from differents institute, namely CNRS, University of Montpellier, Institut National de Recherche en Informatique et en Automatique(INRIA), etc.~\\
+Founded in 1992, LIRMM,shorts for Laboratoire d'Informatique, de Robotique et de Microélectronique de Montpellier, is a joint research laboratory between the Centre National de la Recherche Scientifique(CNRS) and the University of Montpellier. The lab has gathered many researchers from different countries, such as France, Italy, China, Brazil, and from differents institute, namely CNRS, University of Montpellier, Institut National de Recherche en Informatique et en Automatique(INRIA), etc. \cite{LIRMM}.~\\
 ~\\
 %LIRMM image
 \begin{figure}[h]
-\includegraphics[angle=0,width=10cm]{lirmm.png}
+\includegraphics[angle=0,width=11cm]{lirmm.png}
 \centering
 \caption{LIRMM Official Logo}
 \end{figure}
 ~\\
-The researches at LIRMM concentrate computer science, microelectronic, and robotic that cover the following interest: Design and verify integrate, mobile and communication systems, agent-based modeling on complex systems, and studies in algorithm, bioinformatic, human-machine interactions, robotics, etc. Researches's results usually have applications in various fields, for example, biology, telecommunication, health or is used domestically in the lab. ~\\ 
-\vspace*{1cm}
+The researches at LIRMM concentrate computer science, microelectronic, and robotic that cover the following interest: Design and verify integration process, mobile and communication systems, agent-based modeling on complex systems, and studies in algorithm, bioinformatic, human-machine interactions, robotics, etc. Researches's results usually have applications in various fields, for example, biology, telecommunication, health or is used domestically in the lab \cite{LIRMM}. ~\\ 
+\vspace*{3cm}
 
 
 \section{Report organization}
