@@ -93,10 +93,17 @@ Another way to deal with this problem is to modify the Approximate Operator libr
 ~\\
 The problem of (\textit{3}) and (\textit{4}) was a bit tricky to debug on account of the fact that some information returned by the AST is missing. In the case of (\textit{3}), as the macro is only a Literal Value, we follow the same principle as we did on the previous problem, performing check for appearances of \textit{Macro} and \textit{Literal} statement classes, then perform mutation accordingly. The same, however, can not be applied to (\textit{4}) because this is a function-like Macro with arguments which made debugging dfficult, espcially when the information returned from the Abstract Syntax Tree is missing. Currently, we do not have any solution for this problem so we try to avoid using projects or parts of the project that contains this kind of Pre-processor. The best we can do is to try and replace these function-like Macros with proper functions. \\
 ~\\
-The debugged version of Chimera can be found at: \url{https://github.com/nnkhoa/clang-chimera}\\
+The debugged version of Chimera can be found at: \url{https://github.com/nnkhoa/clang-chimera}.\\
+
 \section{Compatibility with Artificial Neural Network libraries}
 
+In this phase, the goal is to verify that IIDEAA can be used with some of the existing Artificial Neural Network libraries. Preferably, we try to find libraries that are open-source and required the least amount of dependencies. Due to the issues with the run-time environment stated in previous section, a library that was implemented in pure C++ and without the need for external library would be the most suitable for the current iteration of IIDEAA. Libraries that are compatible with IIDEAA should not encounter any trouble during run-time of both Chimera and Bellerophon.\\
+
 \subsection{Darknet}
-Placeholder
+Darknet\cite{darknet13} is a neural network framework written purely in C and has CUDA extension for some GPU application. It was developed and still being updated by Joseph Redmon. With this framework, the programmer is able to develop many artificial neural network-related applications, from simple image classification programs to sophisticated applications such as playing a game of GO or running real-time object detection.\\
+~\\
+We choose this particuliar framework because it matches our criteria of being available open-source while not having to rely on external libraries. We've tried to apply IIDEAA to Darknet, however it was not very successful. The problem was due to the old infrastructure of LLVM that Bellerophon is using. For that particuliar version, the Just-In-Time compiler of Clang was unable to handle the assembly code that was implemented within a crucial Darknet library for image loading/encoding from file/memory, thus crashing the program. This is another drawback of IIDEAA that needs to be addressed since LLVM have been updated steadily for the past few years. \\
+~\\
+The framework is available at \url{https://github.com/pjreddie/darknet}.\\
 \subsection{Fast Artificial Neural Network(FANN)}
-Placeholder
+
