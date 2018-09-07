@@ -1,14 +1,79 @@
-\chapter{Results}
+\chapter{Results and Discussion}
 
+This chapter will cover the result of various experiments with IIDEAA along with some comments and discussion with respect to the obtained result. Starting with AxBench benchmark, we will show what we have discovered regarding further limitations (if any) within the framework by testing it against 2 different Mutation Operators, VPA\_Native and VPA. Subsequently, results on compatibility between IIDEAA and FANN will be presented, displaying how the approximated network performed and discussing the compatible issue. \\
 
-This part must contain the result of the method/algoritm/system developed during the internship. \\
+\section{Validate IIDEAA using AxBench}
 
-This part must also include comparisons with the state of the art.\\
+First of all, IIDEAA was applied to AxBench's benchmark using VPA\_Native Operator. In brief, this operator changes the data type of the calculation, cycling between \textit{float}, \textit{double}, and \textit{long double}. The table below display the results as well as some notes regarding the experiment.\\
+~\\
+\newpage
 
-Use tables, figures, graphics to illustrate your results. \\ 
+\begingroup
+\begin{scriptsize}
+\begin{longtable}{@{}lllllllll@{}}
+\toprule
+\multirow{2}{*}{}& \multicolumn{1}{c}{\multirow{2}{*}{Function used}}& \multicolumn{1}{c}{\multirow{2}{*}{Population}}& \multicolumn{1}{c}{\multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Other\\ Parameters\\ (if any)\end{tabular}}}& \multicolumn{4}{c}{Result}& \multicolumn{1}{c}{\multirow{2}{*}{Notes}}\\ \cmidrule(lr){5-8}
+& \multicolumn{1}{c}{}& \multicolumn{1}{c}{}& \multicolumn{1}{c}{}& \multicolumn{1}{|c|}{\begin{tabular}[c]{@{}c@{}}No. of\\ Variables\\ with\\ modified\\ precision\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Acceptable \\ Error\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Reward\\\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Error \\ Metric\end{tabular}} & \multicolumn{1}{|c}{}\\ \midrule
+\multicolumn{1}{|l|}{\begin{tabular}[c]{@{}l@{}}Black \\ Scholes\end{tabular}}& \multicolumn{1}{l|}{CNDF}& \multicolumn{1}{l|}{800}& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}-  Max-\\Gen: 25\\ - Cross-\\Rate: 1\\ - Shift-\\Mutate: 0.5\\ - Exchange-\\Mutate: 0.5\\ - pCross:\\ 0.35\\ - pMut:\\: 0.15\end{tabular}}& \multicolumn{1}{l|}{20}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Relative \\ Average \\ Error\end{tabular}}& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}- No Acceptable Error \\- Some functions could\\ not be used in Chimera\\ due to Chimera's\\ limitation in modifying\\ variables with alias type\\(e.g. typedef, \#define)\end{tabular}}\\ \midrule
+\multicolumn{1}{|l|}{FFT}& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}calcFftIndices,\\ radix2DitCoo-\\leyTykeyFft\end{tabular}} & \multicolumn{1}{l|}{100}& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}-  Max-\\Gen: 20\\ - Cross-\\Rate: 1\\ - Shift-\\Mutate: 0.5\\ - Exchange-\\Mutate: 0.5\\ - pCross:\\ 0.35\\ - pMut:\\: 0.15\end{tabular}} & \multicolumn{1}{l|}{17}& \multicolumn{1}{l|}{2.79478e-07}& \multicolumn{1}{l|}{17}& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Relative \\ Average \\ Error\end{tabular}}& \multicolumn{1}{l|}{N/A}\\ \midrule
+\multicolumn{1}{|l|}{\begin{tabular}[c]{@{}l@{}}Inverse\\ K2J\end{tabular}}& \multicolumn{1}{l|}{forwardk2j}& \multicolumn{1}{l|}{70}& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}-  Max-\\Gen: 15\\ - Cross-\\Rate: 1\\ - Shift-\\Mutate: 0.5\\ - Exchange-\\Mutate: 0.5\\ - pCross:\\ 0.35\\ - pMut:\\: 0.15\end{tabular}} & \multicolumn{1}{l|}{6}& \multicolumn{1}{l|}{0.652163}& \multicolumn{1}{l|}{10}& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Relative \\ Average \\ Error\end{tabular}}& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}- inversek2j function did\\ not have any variable\\ that can be reduced\end{tabular}}\\ \midrule
+\multicolumn{1}{|l|}{\begin{tabular}[c]{@{}l@{}}JMeint \\ (question-\\able)\end{tabular}} & \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}- Some functions cannot\\ be applied with Chimera\\ as there's a limitation in\\ the clang engine in\\ fetching information on\\ Macro Functions\end{tabular}} \\ \midrule
+\multicolumn{1}{|l|}{JPEG}& \multicolumn{1}{l|}{encodeMcu}& \multicolumn{1}{l|}{30}& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}-  Max-\\Gen: 1\\ - Cross-\\Rate: 1\\ - Shift-\\Mutate: 0.5\\ - Exchange-\\Mutate: 0.5\\ - pCross:\\ 0.35\\ - pMut:\\: 0.55\end{tabular}}& \multicolumn{1}{l|}{3}& \multicolumn{1}{l|}{111.775}& \multicolumn{1}{l|}{6}& \multicolumn{1}{l|}{RMSE}& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}N/A\end{tabular}}\\ \midrule
+\multicolumn{1}{|l|}{KMeans}& \multicolumn{1}{l|}{segmentImage}& \multicolumn{1}{l|}{75}& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}-  Max-\\Gen: 20\\ - Cross-\\Rate: 1\\ - Shift-\\Mutate: 0.5\\ - Exchange-\\Mutate: 0.5\\ - pCross:\\ 0.35\\ - pMut:\\: 0.55\end{tabular}} & \multicolumn{1}{l|}{7}& \multicolumn{1}{l|}{0.0368577}& \multicolumn{1}{l|}{10}& \multicolumn{1}{l|}{RMSE}& \multicolumn{1}{l|}{N/A}\\ \midrule
+\multicolumn{1}{|l|}{Sobel}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}- Could not be used in\\ the testing environment\\ due to conflicting\\ dependencies\end{tabular}}\\ \bottomrule
+\end{longtable}
+\end{scriptsize}
+\captionof{table}{IIDEAA's VPANative experiment with AxBench benchmark}
+\endgroup
+~\\
+To be more specific, the all the parameters used were chosen based on running these experiments until acceptable solutions are found. The \textit{Population} parameter determines size of the individual and the \textit{Max-Gen} parameter indicates the stopping criterion of the evolution engine. Other parameters involve around how to evole the variant to the next generation.\\
+~\\
+For this Mutation Operator, the Reward is calculated via the default function given by the developer. This result of this function will indicate the the strenght of the approximation. For example, changing the data type from \textit{double} to \textit{float} or from \textit{longdouble} to \textit{double} will be counted as 1, moving from \textit{long double} to \textit{float} counts as 2. The final result is the sum of  the strength of all the approximation. \\
+~\\
+Since the purpose of this phase is to just validate IIDEAA, finding the best acceptable error/configuration is not our main concern. Hence, we only calculate the errors that vary from the original version of the software just for the sake of fulfilling all of the required procedure to run Bellerophon. \\
+~\\
+As can be seen from the table, there were some benchmarks that could not be run with the framework, as Chimera was unable to mutate them. However, The \textit{Sobel} benchmark, as stated in the previous chapter, was not able to run properly not due to Chimera but because of the conflicting dependencies between the application and the testing environment. \\
+~\\
+There is also an interesting behavior regarding the final result of these experiments. With those that worked well with both of the tools, using VPA\_Native Operator usually generated only 1 acceptable result. For the case of \textit{Blackscholes} benchmark, there was no result that can satisfy the threshold at all since all the errors value calculated during run-time were quite huge, ranging in around value of a  few thousands.\\
+~\\
+Having seen the fore-mentioned behaviors, we narrowed the benchmark set by using only those that have yet to faced any problem in Chimera and having them run with framework again. The only different element in the test this time is that instead of using VPA\_Native operator, we ultilized the VPA operator, which has the same constructor as VPA\_Native but has alternated implementation. Unlike VPA\_Native that can change data types of varibles, the developer designed VPA to be able to alter the total number of bits within a variable. \\
 
-Comment your results, and explain the context used to obtain these results.
+\newpage
+~\\
+Since there is not a need to alternate existing parameters, we decided not to include them in the following table.\\
+\begingroup
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{Blackscholes} & \multicolumn{2}{c|}{FFT} & \multicolumn{2}{c|}{InverseK2J} & \multicolumn{2}{c|}{KMeans} \\ \hline
+Error & Reward & Error & Reward & Error & Reward & Error & Reward \\ \hline
+0.0349714 & 454 & 1.02217 & 128 & 0.652163 & 102 & 0.718068 & 96 \\ \hline
+0.0300008 & 182 & 1.1219 & 208 & 0.653154 & 214 & 0.245507 & 16 \\ \hline
+0.0346922 & 342 & 2.13684 & 240 & 0.653238 & 230 & 0.253941 & 32 \\ \hline
+0.03357 & 310 & 0.909483 & 96 & 0.652166 & 166 & 0.485896 & 48 \\ \hline
+0.0321189 & 262 & 2.85061 & 256 & 0.653896 & 262 & 0.49855 & 64 \\ \hline
+0.283585 & 518 & 1.10038 & 192 &  &  &  &  \\ \hline
+0.0380954 & 486 & 1.90281 & 224 &  &  &  &  \\ \hline
+\end{tabular}
+\end{table}
+\captionof{table}{IIDEAA's VPA experiment with AxBench benchmark}
+\endgroup
+~\\
+Unlike the previous operator of which the default reward function was used, since VPA acutally changes the number of bits of the varible, we were able to implement a dedicate reward function, calculating how many bits was cut off during the execution of the program, thus indicates how much memory was saved.\\
+~\\
+In contrast to the results obtained using VPA\_Native mutator, Bellerophon returned many set of results with different pairs of error/reward value. With this operator, Bellerophon was also able to achieved acceptable results for \textit{Blackscholes} benchmark. However, running IIDEAA with \textit{JPEG} benchmark was not very successful as during run-time of one of the variants, the program encountered a segmentation fault, thus crashed. We have tried to debug and trace the cause of the problem but to no avail. We speculated that the Approximation using this operator may haved caused some undefined behavior which led to the crash. \\
 
+\section{IIDEAA's Compatability with FANN}
+Since the results of using VPA Operator was more convincing than that of VPA\_Native, we have chosen VPA as the Mutator in this evaluation. \\
+\begingroup
+\begin{table}[H]
 
-
-
+\end{table}
+\captionof{table}{FANN Mushroom Classification using IIDEAA Result}
+\endgroup
+~\\
+The table contains the final archive of results achieved from running IIDEAA with the mushroom example, including both rejected and acceptable results. From the table, it can be seen that while there were a lot of versions of the neural network that have immense accuracy decrease, some versions did achieved better accuracy compared to the oracle result, if not exceeded it by a large margin. Nevertheless, it should be also taken into account that this network initializes all the weight randomly at the begin. Thus, making the results somewhat unstable to assess them fairly. \\
+~\\
+As for execution time, all acceptable variants finished the task a lot slower than the original, around 8 times slower (8.47s versus 1.13s on average). This may due to the overhead caused by the VPA API since it has to process and apply custom precision scaling to the variables before each calculation can begin, which is costly since there are a lot of computations in the backpropagation phase of a neural network. \\
+~\\
+For now, we can safely conclude that the current iteration of IIDEAA works well with FANN library without any problem. \\
