@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt,twoside,openright]{book}
+\documentclass[a4paper,12pt]{book}
 
 
 \usepackage[utf8]{inputenc}
@@ -23,6 +23,10 @@
 \usepackage{fancyvrb}
 \usepackage{booktabs}
 \usepackage{multirow}
+\usepackage{minted}
+\usepackage{longtable}
+\usepackage{footnote}
+\usepackage{caption}
 %\usepackage{psfig}
 
 
@@ -55,14 +59,14 @@
 \def\MasterLevel{Master Thesis }
 %\def\MasterLevel{Master 1}
 
-\def\InternshipTitle{[Title of internship]}
-\def\FirstName{[First name]}
-\def\LastName{[Last name]}
-\def\HostOrganization{[Host name]}
-\def\CityName{[City]}
-\def\CountryName{[Country]}
-\def\UniversityName{[University name]}
-\def\Supervisor{[name]}
+\def\InternshipTitle{Validation and Extension of an automatic framework for design space exploration of approximate variants of an application}
+\def\FirstName{Nhu Khoa}
+\def\LastName{Nguyen}
+\def\HostOrganization{LIRMM}
+\def\CityName{Montpellier}
+\def\CountryName{France}
+\def\UniversityName{place holder}
+\def\Supervisor{Alberto Bosio}
 
 
 
@@ -168,13 +172,9 @@
 
 \include{Introduction}
 
-
-
-
-
 % ----------------------- CHAPITRE ---------------------------
 
-\include{StateOfTheArt}
+\include{Background}
 
 % ----------------------- CHAPITRE ---------------------------
 
@@ -196,9 +196,9 @@
 
 % ----------------------- ANNEXES ---------------------------
 
-\appendix
+%\appendix
 
-\include{Appendix}
+%\include{Appendix}
 
 
 
