@@ -4,10 +4,13 @@ This chapter will cover the result of various experiments with IIDEAA along with
 
 \section{Validate IIDEAA using AxBench}
 
-First of all, IIDEAA was applied to AxBench's benchmark using VPA\_Native Operator. In brief, this operator changes the data type of the calculation, cycling between \textit{float}, \textit{double}, and \textit{long double}. The table below display the results as well as some notes regarding the experiment.\\
+First of all, IIDEAA was applied to AxBench's benchmark using VPA\_Native Operator. In brief, this operator changes the data type of the calculation, cycling between \textit{float}, \textit{double}, and \textit{long double}. Table 4.1 below displays the results as well as some notes regarding the experiment.\\
+~\\
+To be more specific, all of the parameters used were chosen based on running these experiments until acceptable solutions are found. The \textit{Population} parameter determines the size of the individual and the \textit{Max-Gen} parameter indicates the stopping criterion of the evolution engine. Other parameters involve around how to evole the variant to the next generation.\\
+~\\
+For this Mutation Operator, the Reward is calculated via the default function given by the developer. The result of this function will indicate the the strength of the approximation. For example, changing the data type from \textit{double} to \textit{float} or from \textit{longdouble} to \textit{double} will be counted as 1, moving from \textit{long double} to \textit{float} counts as 2. The final result is the sum of  the strength of all the approximations. \\
 ~\\
 \newpage
-
 \begingroup
 \begin{scriptsize}
 \begin{longtable}{@{}lllllllll@{}}
@@ -23,27 +26,25 @@ First of all, IIDEAA was applied to AxBench's benchmark using VPA\_Native Operat
 \multicolumn{1}{|l|}{Sobel}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{N/A}& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}- Could not be used in\\ the testing environment\\ due to conflicting\\ dependencies\end{tabular}}\\ \bottomrule
 \end{longtable}
 \end{scriptsize}
+\addtocounter{table}{-1}
 \captionof{table}{IIDEAA's VPANative experiment with AxBench benchmark}
 \endgroup
-~\\
-To be more specific, the all the parameters used were chosen based on running these experiments until acceptable solutions are found. The \textit{Population} parameter determines size of the individual and the \textit{Max-Gen} parameter indicates the stopping criterion of the evolution engine. Other parameters involve around how to evole the variant to the next generation.\\
-~\\
-For this Mutation Operator, the Reward is calculated via the default function given by the developer. This result of this function will indicate the the strenght of the approximation. For example, changing the data type from \textit{double} to \textit{float} or from \textit{longdouble} to \textit{double} will be counted as 1, moving from \textit{long double} to \textit{float} counts as 2. The final result is the sum of  the strength of all the approximation. \\
 ~\\
 Since the purpose of this phase is to just validate IIDEAA, finding the best acceptable error/configuration is not our main concern. Hence, we only calculate the errors that vary from the original version of the software just for the sake of fulfilling all of the required procedure to run Bellerophon. \\
 ~\\
 As can be seen from the table, there were some benchmarks that could not be run with the framework, as Chimera was unable to mutate them. However, The \textit{Sobel} benchmark, as stated in the previous chapter, was not able to run properly not due to Chimera but because of the conflicting dependencies between the application and the testing environment. \\
 ~\\
-There is also an interesting behavior regarding the final result of these experiments. With those that worked well with both of the tools, using VPA\_Native Operator usually generated only 1 acceptable result. For the case of \textit{Blackscholes} benchmark, there was no result that can satisfy the threshold at all since all the errors value calculated during run-time were quite huge, ranging in around value of a  few thousands.\\
+There is also an interesting behavior regarding the final result of these experiments. With those that worked well with both of the tools, using VPA\_Native Operator usually results in the calculated error being the same value for almost every possible variants (which can be either acceptable or unacceptable). For the case of \textit{Blackscholes} benchmark, there was no result that can satisfy the threshold at all since all the errors value calculated during run-time were quite huge, ranging in around value of a  few thousands.\\
 ~\\
-Having seen the fore-mentioned behaviors, we narrowed the benchmark set by using only those that have yet to faced any problem in Chimera and having them run with framework again. The only different element in the test this time is that instead of using VPA\_Native operator, we ultilized the VPA operator, which has the same constructor as VPA\_Native but has alternated implementation. Unlike VPA\_Native that can change data types of varibles, the developer designed VPA to be able to alter the total number of bits within a variable. \\
+Having seen the fore-mentioned behaviors, we narrowed the benchmark set by using only those that have yet to faced any problem in Chimera and having them run with framework again. The only different element in the test this time is that instead of using VPA\_Native operator, we ultilized the VPA operator, which has the same constructor as VPA\_Native, but has alternated implementation. Unlike VPA\_Native that can change data types of varibles, the developer designed VPA to be able to alter the total number of bits within a variable. \\
 
 \newpage
 ~\\
 Since there is not a need to alternate existing parameters, we decided not to include them in the following table.\\
 \begingroup
 \begin{table}[H]
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
 \hline
 \multicolumn{2}{|c|}{Blackscholes} & \multicolumn{2}{c|}{FFT} & \multicolumn{2}{c|}{InverseK2J} & \multicolumn{2}{c|}{KMeans} \\ \hline
 Error & Reward & Error & Reward & Error & Reward & Error & Reward \\ \hline
@@ -59,21 +60,32 @@ Error & Reward & Error & Reward & Error & Reward & Error & Reward \\ \hline
 \captionof{table}{IIDEAA's VPA experiment with AxBench benchmark}
 \endgroup
 ~\\
-Unlike the previous operator of which the default reward function was used, since VPA acutally changes the number of bits of the varible, we were able to implement a dedicate reward function, calculating how many bits was cut off during the execution of the program, thus indicates how much memory was saved.\\
+Unlike the previous operator of which the default reward function was used, since VPA acutally changes the number of bits of the varible, we were able to implement a dedicate reward function, calculating how many bits were cut off during the execution of the program, thus indicates how much memory was saved.\\
 ~\\
-In contrast to the results obtained using VPA\_Native mutator, Bellerophon returned many set of results with different pairs of error/reward value. With this operator, Bellerophon was also able to achieved acceptable results for \textit{Blackscholes} benchmark. However, running IIDEAA with \textit{JPEG} benchmark was not very successful as during run-time of one of the variants, the program encountered a segmentation fault, thus crashed. We have tried to debug and trace the cause of the problem but to no avail. We speculated that the Approximation using this operator may haved caused some undefined behavior which led to the crash. \\
+In contrast to the results obtained using VPA\_Native mutator, Bellerophon returned many sets of result with different pairs of error/reward value. With this operator, Bellerophon was also able to achieve acceptable results for \textit{Blackscholes} benchmark. However, running IIDEAA with \textit{JPEG} benchmark was not very successful as during run-time of one of the variants, the program encountered a segmentation fault, thus crashed. We have tried to debug and trace the cause of the problem but to no avail. We speculated that the Approximation using this operator may have caused some undefined behaviors which led to the crash. \\
 
 \section{IIDEAA's Compatability with FANN}
-Since the results of using VPA Operator was more convincing than that of VPA\_Native, we have chosen VPA as the Mutator in this evaluation. \\
+Since the results of using VPA Operator was more convincing than that of VPA\_Native, we have chosen VPA as the Mutator in this evaluation. Recall from chapter 3, aside from having number of bits reduced as the reward, we have defined the error and penalty function differently. The error function revoled around calculating the \textit{MSE} in the network validation phase to show the deviation between the mutated version and original version. The penalty function show how long it would take for the training phase to complete. \\
+\newpage
 \begingroup
 \begin{table}[H]
-
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+ & MSE (Validation Phase) & Training Time (s) & Reward \\ \hline
+Original & 1.90128e-05 & 1.03339 & N/A \\ \hline
+Variant 1 & 0.24959 & 39.2949 & 80 \\ \hline
+Variant 2 & 7.66121e-4 & 31.3205 & 64 \\ \hline
+Variant 3 & 1.09146e-6 & 8.88354 & 32 \\ \hline
+Variant 4 & 6.12706e-7 & 8.41982 & 16 \\ \hline
+\end{tabular}
 \end{table}
 \captionof{table}{FANN Mushroom Classification using IIDEAA Result}
 \endgroup
+\vspace*{1cm}
 ~\\
-The table contains the final archive of results achieved from running IIDEAA with the mushroom example, including both rejected and acceptable results. From the table, it can be seen that while there were a lot of versions of the neural network that have immense accuracy decrease, some versions did achieved better accuracy compared to the oracle result, if not exceeded it by a large margin. Nevertheless, it should be also taken into account that this network initializes all the weight randomly at the begin. Thus, making the results somewhat unstable to assess them fairly. \\
+The table contains the final archive of results achieved from running IIDEAA with the mushroom example, including both rejected and acceptable results. From the table, it can be seen that while there were versions of the neural network that have immense accuracy decrease, some versions even achieved better accuracy compared to the oracle result, if not exceeded it by a large margin. Nevertheless, it should be also taken into account that this network initializes all the weight randomly at the beginning. Thus, making the results somewhat unstable to assess them fairly. \\
 ~\\
-As for execution time, all acceptable variants finished the task a lot slower than the original, around 8 times slower (8.47s versus 1.13s on average). This may due to the overhead caused by the VPA API since it has to process and apply custom precision scaling to the variables before each calculation can begin, which is costly since there are a lot of computations in the backpropagation phase of a neural network. \\
+As for execution time, all acceptable variants finished the task a lot slower than the original, around 8 times slower (8.88s and 8.41s versus 1.03s). This may due to the overhead caused by the VPA API since it has to process and apply custom precision scaling to the variables before each calculation can begin, which is costly since there are a lot of computations in the backpropagation phase of a neural network. \\
 ~\\
-For now, we can safely conclude that the current iteration of IIDEAA works well with FANN library without any problem. \\
+For now, we can safely conclude that the current iteration of IIDEAA works well with FANN library without any problem. However, we would like to test FANN more extensively with other functions. Since the framework has lots of macro usage, up until now, we have avoided targeting functions that utilize these. \\
