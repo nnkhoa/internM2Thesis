@@ -44,7 +44,7 @@ To demonstrate bugs regarding the mutation process, consider the following examp
 \end{minted}
 The correct behavior can be expected when mutating calculation (\textit{1}) is as follow:
 \begin{minted}[fontsize=\normalsize]{cpp}
-	r = (float) ::vpa::VPA(x, OP_1)/::vpa::VPA(y, OP_2);
+	r = (float) ::vpa::VPA(x, OP_1)/::vpa::VPA(y, OP_2); /*(1)*/
 \end{minted}
 In general, the mutation process will travel down the Abstract Syntax Tree, searching for specific Tree Nodes that contain paticuliar symbols, depending on the definition of the Mutation Operator. For example, in the case of VPA\_Native Operator, Chimera will look for any Binary Operators or Binary Assign Operators such as add and subtract. Once these operators are found, Chimera will attempt to make modifications on the left hand side and/or right hand side of the operator based on the API of the Approximate Operator. \\
 \begin{figure}[H]
